@@ -100,5 +100,93 @@ Interwal, that contains the maximum number of steps is `r a`.
 ## Imputing missing values
 
 
+##### Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NA)
+```{r}
+a <- activity %>%
+  filter(is.na(steps))
+```
+
+The total number of missing values is `r nrow(a)`. 
+
+
+
+##### Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
+
+```{r}
+# fill NA with mean of 5-minute interval
+c <- activity %>%
+  group_by(interval)%>%
+  mutate(average=mean(steps,na.rm=T))%>%
+  mutate(no.na = if_else(is.na(steps)==T, paste(average), paste(steps)))%>%
+  mutate(no.na = as.numeric(no.na))
+```
+
+##### Create a new dataset that is equal to the original dataset but with the missing data filled in.
+
+```{r}
+c <- c %>%
+  select(5,2,3)%>%
+  rename(steps = no.na) %>%
+  mutate(steps = round(steps,0))
+```
+
+##### Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+
+```{r}
+c <- c %>%
+  group_by(date)%>%
+  summarise(steps=sum(steps))
+
+ggplot(c, aes(x=steps))+
+  geom_histogram(breaks=seq(0, 22000, by=1000), fill="deepskyblue1", color="grey")+
+  labs(x="steps by day", y="Frequency", title = "Total number of steps taken each day")+
+  theme_bw()+
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+```{r}
+# calculating mean and median
+average <- mean(c$steps)
+mediana <- median(c$steps)
+```
+
+The mean of total steps taken is `r format(average, scientific=F)` and the median is `r format(mediana, scientific=F)`. These values differ from the previous estimation - both mean and median are almost equal. 
+
+The impact of filling missing data is an increase in steps 10-11 thounands and decrease in steps close to zero. 
+
+***
+
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+
+##### Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
+
+```{r}
+a <- activity %>%
+  mutate(day = wday(ymd(date)))%>%
+  mutate(weekend = if_else(day==1|day==7, paste("weekend"), paste("weekdays")))%>%
+  mutate(weekend = as.factor(weekend))
+  
+```
+
+##### Make a panel plot containing a time series plot (i.e. type="l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
+
+```{r}
+a <- a %>%
+  group_by(interval, weekend)%>%
+  summarise(
+    average = mean(steps, na.rm = T)
+    )
+```
+```{r}
+ggplot(a)+
+  geom_path(aes(x=interval, y=average))+
+  facet_wrap(~weekend, ncol=2)+
+  labs(y="steps", title = "")+
+  theme_bw()+
+  theme()
+```
+
+
