@@ -59,10 +59,43 @@ ggplot(b, aes(x=sum.steps))+
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
+##### Calculate and report the mean and median of the total number of steps taken per day
+
+The mean of total steps taken per day is `r round(mean(b$sum.steps),0)` and the median is `r median(b$sum.steps)`.
+
+***
 
 ## What is the average daily activity pattern?
 
 
+##### Make a time series plot (i.e.type="l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+
+```{r}
+a <- activity %>%
+  group_by(interval)%>%
+  summarise(
+    average = mean(steps, na.rm = TRUE )
+  )
+
+ggplot(a, aes(x=interval, y=average)) +
+  geom_path(color="blue", size=1)+
+  labs(x="5 min interval", y="average number of steps", title= "Average Daily Activity Pattern")+
+  theme_bw()+
+  theme(plot.title = element_text(hjust = 0.5))
+  
+```
+
+
+##### Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?  
+```{r}
+a <- filter(a, average==max(average)) %>%
+  select(1)%>%
+  pull
+```
+
+Interwal, that contains the maximum number of steps is `r a`. 
+
+***
 
 ## Imputing missing values
 
