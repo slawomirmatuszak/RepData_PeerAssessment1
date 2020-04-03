@@ -22,11 +22,42 @@ library(ggthemes)
 
 
 ## Loading and preprocessing the data
+```{r}
+#unzipping a data file
+unzip(zipfile = "./activity.zip")
+#load data into enviroment
+activity <- read.csv("activity.csv") %>%
+  mutate(date=ymd(date))
+```
 
+***
 
 
 ## What is mean total number of steps taken per day?
 
+##### Calculate the total number of steps taken per day
+
+```{r}
+b <- activity %>%
+  group_by(date)%>%
+  summarise(
+    sum.steps=sum(steps, na.rm=T)
+  )
+```
+
+##### Make a histogram of the total number of steps taken each day
+
+```{r}
+ggplot(b, aes(x=sum.steps))+
+  geom_histogram(breaks=seq(0, 22000, by=1000), fill="deepskyblue1", color="grey")+
+  labs(x="steps by day", y="Frequency", title = "Total number of steps taken each day")+
+  geom_vline(aes(xintercept = mean(sum.steps)), size=2, color="red")+
+  geom_vline(aes(xintercept = median(sum.steps)), size=2, color="darkgreen")+
+  annotate("text", x = mean(b$sum.steps)-500, y = 8, label = paste("mean", round(mean(b$sum.steps),0)), color = "red", angle = 90)+
+  annotate("text", x = median(b$sum.steps)-500, y = 8, label = paste("median", median(b$sum.steps)), color = "darkgreen", angle = 90)+
+  theme_bw()+
+  theme(plot.title = element_text(hjust = 0.5))
+```
 
 
 ## What is the average daily activity pattern?
