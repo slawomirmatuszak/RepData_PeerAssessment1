@@ -11,6 +11,15 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r message=FALSE}
+# load libraries
+library(tidyr)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+library(ggthemes)
+```
+
 
 ## Loading and preprocessing the data
 
