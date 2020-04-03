@@ -49,7 +49,7 @@ b <- activity %>%
 
 
 ```r
-ggplot(b, aes(x=sum.steps))+
+g1 <- ggplot(b, aes(x=sum.steps))+
   geom_histogram(breaks=seq(0, 22000, by=1000), fill="deepskyblue1", color="grey")+
   labs(x="steps by day", y="Frequency", title = "Total number of steps taken each day")+
   geom_vline(aes(xintercept = mean(sum.steps)), size=2, color="red")+
@@ -58,9 +58,10 @@ ggplot(b, aes(x=sum.steps))+
   annotate("text", x = median(b$sum.steps)-500, y = 8, label = paste("median", median(b$sum.steps)), color = "darkgreen", angle = 90)+
   theme_bw()+
   theme(plot.title = element_text(hjust = 0.5))
+g1
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](Figs/plot1-1.png)<!-- -->
 
 ##### Calculate and report the mean and median of the total number of steps taken per day
 
@@ -88,7 +89,7 @@ ggplot(a, aes(x=interval, y=average)) +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+![](Figs/unnamed-chunk-4-1.png)<!-- -->
 
 
 ##### Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?  
@@ -154,7 +155,7 @@ ggplot(c, aes(x=steps))+
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+![](Figs/unnamed-chunk-9-1.png)<!-- -->
 
 
 
@@ -204,6 +205,6 @@ ggplot(a)+
   theme()
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+![](Figs/unnamed-chunk-13-1.png)<!-- -->
 
 
