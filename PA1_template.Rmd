@@ -61,7 +61,7 @@ ggplot(b, aes(x=sum.steps))+
 
 ##### Calculate and report the mean and median of the total number of steps taken per day
 
-The mean of total steps taken per day is `r round(mean(b$sum.steps),0)` and the median is `r median(b$sum.steps)`.
+The mean of total steps taken per day is ```r round(mean(b$sum.steps),0)``` and the median is ```r median(b$sum.steps)```.
 
 ***
 
@@ -93,7 +93,7 @@ a <- filter(a, average==max(average)) %>%
   pull
 ```
 
-Interwal, that contains the maximum number of steps is `r a`. 
+Interwal, that contains the maximum number of steps is ```r a```. 
 
 ***
 
@@ -106,7 +106,7 @@ a <- activity %>%
   filter(is.na(steps))
 ```
 
-The total number of missing values is `r nrow(a)`. 
+The total number of missing values is ```r nrow(a)```. 
 
 
 
@@ -151,7 +151,7 @@ average <- mean(c$steps)
 mediana <- median(c$steps)
 ```
 
-The mean of total steps taken is `r format(average, scientific=F)` and the median is `r format(mediana, scientific=F)`. These values differ from the previous estimation - both mean and median are almost equal. 
+The mean of total steps taken is ```r format(average, scientific=F)``` and the median is ```r format(mediana, scientific=F)```. These values differ from the previous estimation - both mean and median are almost equal. 
 
 The impact of filling missing data is an increase in steps 10-11 thounands and decrease in steps close to zero. 
 
