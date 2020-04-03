@@ -6,6 +6,12 @@ output:
 ---
 
 
+```{r setup, include=FALSE}
+# set echo = TRUE for all chuncks
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
 ## Loading and preprocessing the data
 
 
